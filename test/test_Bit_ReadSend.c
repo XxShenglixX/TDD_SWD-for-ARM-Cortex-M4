@@ -213,86 +213,94 @@ void test_sendBits_send_hex_0XE79E_SWDIO_should_set_0111_1001_1110_0111()
 void test_readBit_dataToRead_is_bit_1_should_read_1()
 {
   int dataToRead = 0;
-  
+
   SWCLK_ON_Expect();
 	SWCLK_OFF_Expect();
   readSWDIO_Pin_ExpectAndReturn(1);
-  
+
   TEST_ASSERT_EQUAL(readBit(), 1);
 }
 
 void test_readBit_dataToRead_is_bit_0_should_read_0()
 {
   int dataToRead = 0;
-  
+
   SWCLK_ON_Expect();
 	SWCLK_OFF_Expect();
   readSWDIO_Pin_ExpectAndReturn(0);
-  
+
   TEST_ASSERT_EQUAL(readBit(), 0);
 }
 
-void test_readBits_dataToRead_is_0x04_should_read_001()
+void test_readBits_dataToRead_is_0x04_should_read_1()
 {
-  int dataToRead = 0;
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(0);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(0);
+    int dataToRead = 0;
 
-  readBits((uint32_t *)&dataToRead, 3);
-  
-  TEST_ASSERT_EQUAL(dataToRead, 1);
+    SWCLK_ON_Expect();
+    SWCLK_OFF_Expect();
+    readSWDIO_Pin_ExpectAndReturn(1);
+
+    SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();
+    readSWDIO_Pin_ExpectAndReturn(0);
+
+    SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();
+    readSWDIO_Pin_ExpectAndReturn(0);
+
+    readBits((uint32_t *)&dataToRead, 3);
+
+    TEST_ASSERT_EQUAL(dataToRead, 1);
 }
 
-void test_readBits_dataToRead_is_0xEE_should_read_01110111()
+void test_readBits_dataToRead_hex_0xEE2805D4_SWDIO_should_read_0x2ba01477()
 {
-  int dataToRead = 0;
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(0);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(1);
-  
-  SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();
-  readSWDIO_Pin_ExpectAndReturn(0);
-  
+	uint32_t dataToRead = 0;
 
-  readBits((uint32_t *)&dataToRead, 8);
-  
-  TEST_ASSERT_EQUAL(dataToRead, 0x77);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // LSB
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // E
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // E
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // 2
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0); // 8
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0); // 0
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0); // 5
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // D
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1);
+
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // 4
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(0);
+
+
+    readBits(&dataToRead, 32);
+
+    TEST_ASSERT_EQUAL(dataToRead, 0x2ba01477);
 }
 
 

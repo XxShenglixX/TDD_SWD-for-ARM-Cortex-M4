@@ -113,6 +113,7 @@ void test_checkAddressbit_0x08_bit2_should_return_0()
 {
 	TEST_ASSERT_EQUAL(0,checkAddressbit(0x08,2));
 }
+
 void test_SWD_Request_given_Address0x00_DP_Read_should_return_0xA5()
 {
 	int request = 0 ;
@@ -127,7 +128,6 @@ void test_SWD_Request_given_Address0x00_DP_Read_should_return_0xA5()
 	request = SWD_Request(DP,READ,0x00);
 
 	TEST_ASSERT_EQUAL(0xA5,request);
-
 }
 
 void test_SWD_Request_given_Address0x08_AP_Write_should_return_0x93()

@@ -35,15 +35,13 @@ int readBit()
 	int bitRead = 0 ;
 
 	SWCLK_ON();
-	//delay(3,1,10);
 	SWCLK_OFF();
 
-	bitRead = readSWDIO_Pin();
-	return bitRead ;
+	return readSWDIO_Pin();
 }
 
 /* Read multiple bits !*Read LSB First*!
- * input: 
+ * input:
  *        dataRead is the data need to be read
  *        numberOfBits is to declare how many bits need to be read
  * output:
