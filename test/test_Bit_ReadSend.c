@@ -22,7 +22,7 @@ void test_sendBit_SWDIO_should_HIGH_after_1_bit_is_sent()
 	//clock at falling edge
 	SWCLK_OFF_Expect();
 
-	//received 1 bit SWDIO set HIGH
+	// 1
 	SWDIO_High_Expect();
 
 	//clock goes high
@@ -39,7 +39,7 @@ void test_sendBit_SWDIO_should_LOW_after_0_bit_is_sent()
 	//clock at falling edge
 	SWCLK_OFF_Expect();
 
-	//received 0 bit SWDIO set LOW
+	// 0
 	SWDIO_Low_Expect();
 
 	//clock goes high
@@ -53,23 +53,8 @@ void test_sendBits_send_hex_0x02_SWDIO_should_show_0_then_1()
 {
 	int dataToSend = 0x02;
 
-	//clock low
-	SWCLK_OFF_Expect();
-
-	// 0
-	SWDIO_Low_Expect();
-
-	//clock high
-	SWCLK_ON_Expect();
-
-	//clock low
-	SWCLK_OFF_Expect();
-
-	// 1
-	SWDIO_High_Expect();
-
-	//clock high
-	SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
 	//call function here
 	sendBits(dataToSend, 2);
@@ -79,40 +64,11 @@ void test_sendBits_send_hex_0x14_SWDIO_should_set_00101()
 {
 	int dataToSend = 0x14;
 
-	SWCLK_OFF_Expect();
-
-	// 0
-	SWDIO_Low_Expect();
-
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-
-	// 0
-	SWDIO_Low_Expect();
-
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-
-	// 1
-	SWDIO_High_Expect();
-
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-
-	// 0
-	SWDIO_Low_Expect();
-
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-
-	// 1
-	SWDIO_High_Expect();
-
-	SWCLK_ON_Expect();
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
 	//call function here
 	sendBits(dataToSend, 5);
@@ -122,92 +78,76 @@ void test_sendBits_send_hex_0XE79E_SWDIO_should_set_0111_1001_1110_0111()
 {
 	int dataToSend = 0XE79E;
 
-	SWCLK_OFF_Expect();
-	// 0
-	SWDIO_Low_Expect();
-	SWCLK_ON_Expect();
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
 
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-  //----------------
-
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-
-  SWCLK_OFF_Expect();
-	// 0
-	SWDIO_Low_Expect();
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-	// 0
-	SWDIO_Low_Expect();
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-  //----------------
-
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-
-  SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-	// 0
-	SWDIO_Low_Expect();
-	SWCLK_ON_Expect();
-  //----------------
-
-	SWCLK_OFF_Expect();
-	// 0
-	SWDIO_Low_Expect();
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-
-	SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-
-  SWCLK_OFF_Expect();
-	// 1
-	SWDIO_High_Expect();
-	SWCLK_ON_Expect();
-  //----------------
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
 	//call function here
 	sendBits(dataToSend, 16);
+}
+
+void test_sendBits_send_hex_0x5FA68D20_SWDIO_should_set_0000_0100_1011_0001_0110_0101_1111_1010()
+{
+	uint32_t dataToSend = 0x5FA68D20;
+
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();    // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+    SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+    SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+
+	//call function here
+	sendBits(dataToSend, 32);
 }
 
 void test_readBit_dataToRead_is_bit_1_should_read_1()

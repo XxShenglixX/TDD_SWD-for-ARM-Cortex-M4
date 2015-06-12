@@ -1,13 +1,29 @@
 #include "Bit_ReadSend.h"
 
-/*	Send single bit during falling edge
- *	input : single bit data
+/*	Description:    Send single bit
+ *
+ *                  Write MODE
+ *                  ==========
+ *                  - HOST send bit on falling edge
+ *                  - TARGET read on next rising edge
+ *
+ *                  Read MODE
+ *                  ==========
+ *                  - HOST read on next falling edge
+ *                  - TARGET send bit on rising edge
+ *
+ *                  SWDIO will set high when data is 1
+ *                  SWDIO will set low when data is 0
+ *
+ *	Parameters:     value is the single bit data
+ *
+ *  Return:         none
  */
 void sendBit(int value)
 {
 	SWCLK_OFF();
 
-	if	(value == 1)
+	if(value == 1)
 		SWDIO_High();
 	else
 		SWDIO_Low();
@@ -15,6 +31,15 @@ void sendBit(int value)
 	SWCLK_ON();
 }
 
+/*	Description:    Send multiple bits !*Send LSB First*!
+ *                  - SWDIO will set high when data is not 0
+ *                  - SWDIO will set low when data is 0
+ *
+ *	Parameters:     dataToSend is the data ready to send
+ *                  numberOfBits is the number of bit need to send
+ *
+ *  Returns:        NONE
+ */
 void sendBits(uint32_t dataToSend,int numberOfBits)
 {
 	//LSB first
@@ -30,22 +55,40 @@ void sendBits(uint32_t dataToSend,int numberOfBits)
 	}
 }
 
+/*	Description:    Read single bit
+ *
+ *                  Write MODE
+ *                  ==========
+ *                  - HOST send bit on falling edge
+ *                  - TARGET read on next rising edge
+ *
+ *                  Read MODE
+ *                  ==========
+ *                  - HOST read on next falling edge
+ *                  - TARGET send bit on rising edge
+ *
+ *                  SWDIO will set high when data is not zero
+ *                  SWDIO will set low when data is zero
+ *
+ *	Parameters:     dataToSend is the data ready to send
+ *                  numberOfBits is the number of bit need to send
+ *
+ *  Returns:        readSWDIO_Pin bit status on the SWDIO_PIN
+ */
 int readBit()
 {
-	int bitRead = 0 ;
-
 	SWCLK_ON();
 	SWCLK_OFF();
 
 	return readSWDIO_Pin();
 }
 
-/* Read multiple bits !*Read LSB First*!
- * input:
- *        dataRead is the data need to be read
- *        numberOfBits is to declare how many bits need to be read
- * output:
- *        store data back into dataRead after read in LSB first form
+/*	Description:    Read multiple bits !*Read LSB First*!
+ *
+ *	Parameters:     dataRead is the data need to be read
+ *                  numberOfBits is to declare how many bits need to be read
+ *
+ *  Returns:        NONE
  */
 void readBits(uint32_t *dataRead,int numberOfBits)
 {
@@ -57,5 +100,4 @@ void readBits(uint32_t *dataRead,int numberOfBits)
 		bitRead = readBit();
 		*dataRead = *dataRead | (bitRead << i ) ;
 	}
-
 }
