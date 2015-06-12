@@ -58,7 +58,6 @@ void readBits(uint32_t *dataRead,int numberOfBits)
 	{
 		bitRead = readBit();
 		*dataRead = *dataRead | (bitRead << i ) ;
-    printf("dataRead %d ", *dataRead);
 	}
 
 }

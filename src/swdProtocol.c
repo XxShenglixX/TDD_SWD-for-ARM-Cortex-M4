@@ -19,6 +19,7 @@ void initialisation()
 
 	//Eight extra idle clock
 	extraIdleClock(8);
+	
 	lineReset();
 }
 
@@ -65,7 +66,7 @@ int SWD_Request(int APnDP,int ReadWrite,int Address)
 	SWD_RequestData = SWD_RequestData | ParityBit << 5;
 	SWD_RequestData = SWD_RequestData | STOPBIT << 6;
 	SWD_RequestData = SWD_RequestData | PARKBIT << 7 ;
-
+	
 	return SWD_RequestData ;
 }
 
