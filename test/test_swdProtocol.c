@@ -15,8 +15,8 @@ void tearDown(void)
 {
 }
 
-void test_lineReset_should_call_generate_53clockcycles_with_SWDIO_High()
+/*void test_lineReset_should_call_generate_53clockcycles_with_SWDIO_High()
 {
 	
 	lineReset();
-}
+}*/
