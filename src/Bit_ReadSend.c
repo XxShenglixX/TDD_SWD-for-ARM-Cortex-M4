@@ -33,7 +33,7 @@ int readBit()
 	int bitRead = 0 ;
 
 	SWCLK_ON();
-	delay(3,1,10);
+	//delay(3,1,10);
 	SWCLK_OFF();
 
 	bitRead = readSWDIO_Pin();
