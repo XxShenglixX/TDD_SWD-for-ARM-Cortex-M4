@@ -1,11 +1,11 @@
 #include "unity.h"
-#include "Bit_ReadSend.h"
-#include "mock_configurePort.h"
-#include "mock_IO_Operations.h"
-#include "mock_Delay.h"
-#include "Reset.h"
-#include "swdProtocol.h"
 #include <stdint.h>
+#include "Reset.h"
+#include "Bit_ReadSend.h"
+#include "swdProtocol.h"
+#include "mock_configurePort.h"
+#include "mock_ClkAndIO_Control.h"
+#include "mock_Delay.h"
 
 void setUp(void)
 {
@@ -30,6 +30,6 @@ void test_resetTarget_should_call_ResetPinLow_ResetPin_High()
 	delay_Expect(500,1,1);
 	ResetPin_High_Expect();
 	delay_Expect(2600,1,1);
-	
+
 	resetTarget();
 }

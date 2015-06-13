@@ -2,7 +2,7 @@
 #define swdProtocol_H
 
 #include "Bit_ReadSend.h"
-#include "IO_Operations.h"
+#include "ClkAndIO_Control.h"
 #include "configurePort.h"
 #include "Reset.h"
 

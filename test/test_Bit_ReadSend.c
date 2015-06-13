@@ -1,11 +1,11 @@
 #include "unity.h"
-#include "Bit_ReadSend.h"
-#include "mock_configurePort.h"
-#include "mock_IO_Operations.h"
-#include "mock_Delay.h"
 #include "Reset.h"
-#include "swdProtocol.h"
 #include <stdint.h>
+#include "Bit_ReadSend.h"
+#include "swdProtocol.h"
+#include "mock_configurePort.h"
+#include "mock_ClkAndIO_Control.h"
+#include "mock_Delay.h"
 
 void setUp(void)
 {
