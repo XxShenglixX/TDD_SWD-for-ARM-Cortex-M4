@@ -11,8 +11,6 @@ void configureClock()
 	GpioInfo.Speed = GPIO_SPEED_FAST ;
 
 	HAL_GPIO_Init(GPIOB,&GpioInfo);
-
-
 }
 
 void configureTargetResetPin()
