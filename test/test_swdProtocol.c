@@ -175,8 +175,6 @@ void test_sendSWDRequest_0xA5_should_send0xA5_call_turnAround_SWDIO_InputMode()
 	//send 1
 	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
 
-	turnAround_Expect();
-	SWDIO_InputMode_Expect();
 	sendSWDRequest(0xA5);
 }
 
@@ -204,9 +202,6 @@ void test_sendSWDRequest_0xC3_should_send0xC3_call_turnAround_SWDIO_InputMode()
 	//send 1
 	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
 
-
-	turnAround_Expect();
-	SWDIO_InputMode_Expect();
 	sendSWDRequest(0xC3);
 }
 
@@ -215,48 +210,57 @@ void test_sendSWDRequest_0xC3_should_send0xC3_call_turnAround_SWDIO_InputMode()
 //Parity = 0
 void test_initialisation_should_call_SWDIO_LowHigh_switchJTAGtoSWD_sendSWDRequest0xA5_readACK_readIDCODE_readParity_extraIdleCLock_lineReset()
 {
+    config_ClkAndIO_Expect();
+
 	SWDIO_LowHigh_Expect();
 
 	//switchJTAGtoSWDlineReset_Expect();
 	lineReset_Expect();
 
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
+    //0xE79E
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
 
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
 	lineReset_Expect();
 
 	extraIdleClock_Expect(3);
 
 	//sendSWDRequest 0xA5
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
+    /***************************************************************************************************
+    |  Start bit	|	APnDP   |   RW  |	Addr2	|	Addr3	|	Parity	|     Stop     |    Park   |
+    ---------------------------------------------------------------------------------------------------
+    |      1       |     0      |   1   |     0		|     0		|     1		|      0       |    1      |
+    ***************************************************************************************************/
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
 
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
-	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
+	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();    // 0
+	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();   // 1
 
-	turnAround_Expect();
+    //Switch to input mode here
 	SWDIO_InputMode_Expect();
+	turnAround_Expect();
 
 	//read ACK = OK = 0x1 = 0001
 	SWCLK_ON_Expect();SWCLK_OFF_Expect();readSWDIO_Pin_ExpectAndReturn(1); // LSB

@@ -2,19 +2,17 @@
 
 void initialisation()
 {
-	int SWD_RequestData, ACK = 0;
 	int Parity = 0 ;
-	uint32_t IDCODE = 0;
+	uint32_t IDCODE = 0, ACK = 0;
 
-	SWD_RequestData = SWD_Request(DP,READ,0x00);
-
-	//resetTarget();
+    config_ClkAndIO();//default output mode
 	SWDIO_LowHigh();
 	switchJTAGtoSWD();
-
-	sendSWDRequest(SWD_RequestData);
-	readBits((uint32_t *)&ACK,3);
-	readBits(&IDCODE,32);
+	sendSWDRequest(SWD_Request(DP,READ,0x00));
+	SWDIO_InputMode();//switch input mode
+    turnAround();
+	readBits(&ACK, 3);
+	readBits(&IDCODE, 32);
 	Parity = readBit();
 
 	//Eight extra idle clock
@@ -38,12 +36,15 @@ void switchJTAGtoSWD()
 	extraIdleClock(3);
 }
 
-//Start bit	|	APnDP	|	RW	|	Addr2	|	Addr3	|	Parity	|	Stop	|	Park	|
-//    1     |	0		|	1	| 	0		|	0		|	1		|	0		|	1		|
+/***************************************************************************************************
+ |  Start bit	|	APnDP   |   RW  |	Addr2	|	Addr3	|	Parity	|     Stop     |    Park   |
+ ---------------------------------------------------------------------------------------------------
+ |      1       |    0     |   1   |     0		|     0		|     1		|      0       |    1      |
+ ***************************************************************************************************/
 int SWD_Request(int APnDP,int ReadWrite,int Address)
 {
 	int SWD_RequestData = 0;
-	int Address_bit2 , Address_bit3, ParityBit ;
+	int Address_bit2, Address_bit3, ParityBit;
 
 	Address_bit2 = checkAddressbit(Address,2);
 	Address_bit3 = checkAddressbit(Address,3);
@@ -64,9 +65,7 @@ int SWD_Request(int APnDP,int ReadWrite,int Address)
 
 void sendSWDRequest(int SWD_RequestData)
 {
-	sendBits(SWD_RequestData,8);
-	turnAround();
-	SWDIO_InputMode();
+	sendBits(SWD_RequestData,8);// 8bit
 }
 
 int checkAddressbit(int address,int bitNumber)
