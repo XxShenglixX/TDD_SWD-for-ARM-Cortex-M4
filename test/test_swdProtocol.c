@@ -114,6 +114,11 @@ void test_checkAddressbit_0x08_bit2_should_return_0()
 	TEST_ASSERT_EQUAL(0,checkAddressbit(0x08,2));
 }
 
+void test_checkAddressbit_0x40_bit2_should_return_0()
+{
+	TEST_ASSERT_EQUAL(1,checkAddressbit(0x40,6));
+}
+
 void test_SWD_Request_given_Address0x00_DP_Read_should_return_0xA5()
 {
 	int request = 0 ;
@@ -144,7 +149,6 @@ void test_SWD_Request_given_Address0x08_AP_Write_should_return_0x93()
 	request = SWD_Request(AP,WRITE,0x08);
 
 	TEST_ASSERT_EQUAL(0x93,request);
-
 }
 
 void test_sendSWDRequest_0xA5_should_send0xA5_call_turnAround_SWDIO_InputMode()
@@ -170,7 +174,6 @@ void test_sendSWDRequest_0xA5_should_send0xA5_call_turnAround_SWDIO_InputMode()
 	SWCLK_OFF_Expect();SWDIO_Low_Expect();SWCLK_ON_Expect();
 	//send 1
 	SWCLK_OFF_Expect();SWDIO_High_Expect();SWCLK_ON_Expect();
-
 
 	turnAround_Expect();
 	SWDIO_InputMode_Expect();

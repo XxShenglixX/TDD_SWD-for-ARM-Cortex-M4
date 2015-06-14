@@ -49,8 +49,7 @@ void sendBits(uint32_t dataToSend,int numberOfBits)
 	{
 		if ((dataToSend & (1 << i )) != 0)
 			sendBit(1);
-		else
-			sendBit(0);
+		else    sendBit(0);
 	}
 }
 

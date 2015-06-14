@@ -14,16 +14,14 @@ void extraIdleClock(int numberOfClocks)
 	int i;
 
 	SWDIO_Low();
+
 	for(i = 0 ; i < numberOfClocks ; i ++)
 		clockGenerator_1cycle();
 }
 
 int readSWDIO_Pin()
 {
-	GPIO_PinState bitRead ;
-	bitRead  = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_12);
-
-	return bitRead ;
+	return HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_12);
 }
 
 void turnAround()

@@ -19,24 +19,15 @@ void initialisation()
 
 	//Eight extra idle clock
 	extraIdleClock(8);
-	
+
 	lineReset();
-}
-
-void sendSWDRequest(int SWD_RequestData)
-{
-	sendBits(SWD_RequestData,8);
-	turnAround();
-	SWDIO_InputMode();
-
 }
 
 /* To switch SWJ-DP from JTAG to SWD operation:
  * 1. Send more than 50 SWDCLK cycles with SWDIO = 1. This ensures that both SWD and JTAG are in their reset states
- * 2. Send the 16-bit (0xE79E LSB first) JTAG-to-SWD select sequence on SWDIO
+ * 2. Send the 16-bit (0xE79E LSB first) JTAG-to-SWD select sequence
  * 3. Send more than 50 SWDCLK cycles with SWDIO = 1. This ensures that if SWJ-DP was already in SWD mode.
- * 4. Send two or more SWDCLK cycles with SWDIO = 0. This ensures that the SWD line is in the idle state
- *    before starting a new SWD packet transaction.
+ * 4. Send two or more SWDCLK cycles with SWDIO = 0. This ensures that the SWD line is in the idle state.
  */
 void switchJTAGtoSWD()
 {
@@ -47,7 +38,8 @@ void switchJTAGtoSWD()
 	extraIdleClock(3);
 }
 
-
+//Start bit	|	APnDP	|	RW	|	Addr2	|	Addr3	|	Parity	|	Stop	|	Park	|
+//    1     |	0		|	1	| 	0		|	0		|	1		|	0		|	1		|
 int SWD_Request(int APnDP,int ReadWrite,int Address)
 {
 	int SWD_RequestData = 0;
@@ -66,11 +58,41 @@ int SWD_Request(int APnDP,int ReadWrite,int Address)
 	SWD_RequestData = SWD_RequestData | ParityBit << 5;
 	SWD_RequestData = SWD_RequestData | STOPBIT << 6;
 	SWD_RequestData = SWD_RequestData | PARKBIT << 7 ;
-	
+
 	return SWD_RequestData ;
 }
 
-int checkACK_RWData(uint32_t *data,int *Parity, int SWD_RequestData, int ReadWrite)
+void sendSWDRequest(int SWD_RequestData)
+{
+	sendBits(SWD_RequestData,8);
+	turnAround();
+	SWDIO_InputMode();
+}
+
+int checkAddressbit(int address,int bitNumber)
+{
+	int address_bit =0 ;
+
+	address_bit = address & ( 1 << bitNumber);
+
+	if (address_bit !=0)
+		return 1 ;
+	else
+		return 0 ;
+}
+
+int check_SWDRequest_Parity(int APnDP, int RnW, int addrBit3, int addrBit2)
+{
+	int sum = 0;
+
+	sum = APnDP + RnW + addrBit3 + addrBit2;
+
+	if((sum % 2) != 0) //if odd num 1's return 1
+		return 1;
+	else return 0; // if even numm  1's return 0
+}
+
+/*int checkACK_RWData(uint32_t *data,int *Parity, int SWD_RequestData, int ReadWrite)
 {
 	int ACK  = 0, status = 0;
 	readBits((uint32_t *)&ACK,3);
@@ -93,17 +115,6 @@ int checkACK_RWData(uint32_t *data,int *Parity, int SWD_RequestData, int ReadWri
 		return FAULT ; //FAULT response or no response
 }
 
-int check_SWDRequest_Parity(int APnDP, int RnW, int addrBit3, int addrBit2)
-{
-	int sum = 0;
-
-	sum = APnDP + RnW + addrBit3 + addrBit2;
-
-	if((sum % 2) != 0) //if odd num 1's return 1
-		return 1;
-	else return 0; // if even numm  1's return 0
-}
-
 int check_32bits_Data_Parity(uint32_t Data,int *Parity)
 {
 	int sum = 0 ;
@@ -119,20 +130,6 @@ int check_32bits_Data_Parity(uint32_t Data,int *Parity)
 			return 1;
 	else return 0; // if even numm  1's return 0
 }
-
-
-int checkAddressbit(int address,int bitNumber)
-{
-	int address_bit =0 ;
-
-	address_bit = address & ( 1 << bitNumber);
-
-	if (address_bit !=0)
-		return 1 ;
-	else
-		return 0 ;
-}
-
 
 int ABORT_CLEAR_ERRFLAG(int DAPabort,ErrorFlag errflag)
 {
@@ -226,5 +223,5 @@ void Read_32bits_Data_Parity(uint32_t *data,int *Parity)
 {
 	readBits(data,32);
 	*Parity = readBit();
-}
+}*/
 

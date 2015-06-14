@@ -51,9 +51,8 @@ void SWDIO_InputMode()
 }
 
 
-void configure_IOPorts()
+void config_ClkAndReset()
 {
 	configureClock();
 	configureTargetResetPin();
-	SWDIO_OutputMode();
 }
