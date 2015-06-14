@@ -6,6 +6,6 @@ void configureTargetResetPin();
 void SWDIO_OutputMode();
 void SWDIO_InputMode();
 
-void configure_IOPorts();
+void config_ClkAndIO();
 
 #endif // configurePort_H

@@ -1,8 +1,5 @@
-#ifndef IO_Operations_H
-#define IO_Operations_H
-
-//#define COMPILER_BARRIER() asm volatile("":::"memory");
-
+#ifndef ClkAndIO_Control_H
+#define ClkAndIO_Control_H
 
 void SWCLK_ON();
 void SWCLK_OFF();
@@ -19,4 +16,4 @@ int readSWDIO_Pin();
 void turnAround();
 void SWDIO_LowHigh();
 
-#endif // IO_Operations_H
+#endif // ClkAndIO_Control_H
